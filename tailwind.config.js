@@ -1,15 +1,18 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-    content: [
-        "./resources/**/*.blade.php",
-        "./resources/**/*.js",
-        "./resources/**/*.vue",
-        "./vendor/filament/**/*.blade.php",
-        "./vendor/laravel/jetstream/**/*.blade.php",
-    ],
+import colors from 'tailwindcss/colors'
+import forms from '@tailwindcss/forms'
+import typography from '@tailwindcss/typography'
+
+export default {
+    content: ['./resources/**/*.blade.php', './vendor/filament/**/*.blade.php'],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                danger: colors.rose,
+                primary: colors.blue,
+                success: colors.green,
+                warning: colors.yellow,
+            },
+        },
     },
-    plugins: [],
-    safelist: ["rounded-tr-xl"],
-};
+    plugins: [forms, typography],
+}

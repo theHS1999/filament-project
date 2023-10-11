@@ -24,7 +24,7 @@ class CustomForm extends Page
         // REQIRED FORM ELEMENTS: REPEATER, GROUP
         return $form->schema([
             Repeater::make("inputs")->schema([
-                TextInput::make("")->placeholder("عنوان")->required(),
+                TextInput::make("name")->placeholder("عنوان")->required(),
                 TextInput::make("")->placeholder("تعداد")->required()->numeric(),
                 Select::make("")->placeholder("محصول")->options(["انتخاب اول", "انتخاب دوم", "انتخاب سوم"]),
                 TextInput::make("")->placeholder("عدد")->required()->numeric(),
@@ -32,7 +32,7 @@ class CustomForm extends Page
                 TextInput::make("")->placeholder("عدد")->required()->numeric()->prefix("%")->minValue(1)->maxValue(100),
                 TextInput::make("")->placeholder("عدد")->required()->numeric()->prefix("%")->minValue(1)->maxValue(100),
                 TextInput::make("")->placeholder("عدد")->required()->numeric()->prefix("%")->minValue(1)->maxValue(100),
-            ])->addActionLabel("+")->addable(true)->columns(4),
+            ]),
         ]);
     }
 }

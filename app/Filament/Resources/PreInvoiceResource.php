@@ -51,16 +51,16 @@ class PreInvoiceResource extends Resource
                                 Select::make('client_id')
                                     ->label('Select Your Client')
                                     ->options(ProjectRequest::where('status', ProjectRequest::STATUS_PREINVOICE)->where('freelancer_id', auth()->id())->with('project')->get()->pluck('project.user.name', 'project.user.id'))
-                                    ->required()
+                                    //->required()
                                     ->searchable(),
-                                TextInput::make('title')
-                                ->required(),
+                                TextInput::make('title'),
+                                //->required(),
                                 Select::make('currency_unit')
                                     ->options([
                                         'dolloar' => '$',
                                         'euro' => '€',
-                                    ])
-                                    ->required(),
+                                    ]),
+                                    //->required(),
                                 Radio::make('has_tax')
                                     ->label('')
                                     ->options([
@@ -284,63 +284,63 @@ class PreInvoiceResource extends Resource
                                 ->createItemButtonLabel('Add Division'), // End main Repeater
                         ]), // End Step
 
-                        // Step::make('description')
-                        //     ->description("file or description")
-                        //     ->visible(fn (PreInvoice $record = null) => (!empty($record) && $record->client_id == auth()->id()) ? false : true)
-                        //     ->schema([
-                        //         Section::make('Pre Invoice File or Description (optional)')->schema([
-                        //             SpatieMediaLibraryFileUpload::make('pre_invoice_file')->collection('pre_invoice_file')->columnSpan(1),
-                        //             Textarea::make('description')->rows(2)->columnSpan(1),
+                        Step::make('description')
+                            ->description("file or description")
+                            ->visible(fn (PreInvoice $record = null) => (!empty($record) && $record->client_id == auth()->id()) ? false : true)
+                            ->schema([
+                                Section::make('Pre Invoice File or Description (optional)')->schema([
+                                    SpatieMediaLibraryFileUpload::make('pre_invoice_file')->collection('pre_invoice_file')->columnSpan(1),
+                                    Textarea::make('description')->rows(2)->columnSpan(1),
             
-                        //             Placeholder::make("total_all")
-                        //                                     ->view('forms.components.calculator-placeholder')
-                        //                                     ->label("Totals:")
-                        //                                     ->content(function ($get, $set) {
-                        //                                         $without_vat = collect($get('products'))
-                        //                                             ->pluck('total_product_row')
-                        //                                             ->sum();
-                        //                                         $with_vat = collect($get('products'))
-                        //                                             ->pluck('total_product_row_vat')
-                        //                                             ->sum();
-                        //                                         $set('total_products', $without_vat);
-                        //                                         $set('total_products_vat', $with_vat);
-                        //                                         return "ex vat " . $without_vat . " € <br> " . "inc vat " . $with_vat . " €";
-                        //                                     }),
-                        //                                     Hidden::make('total_products'),
-                        //                                     Hidden::make('total_products_vat'),
-                        //         ])->columns(3), // End Section
-                        //     ]), // End Step
+                                    Placeholder::make("total_all")
+                                                            ->view('forms.components.calculator-placeholder')
+                                                            ->label("Totals:")
+                                                            ->content(function ($get, $set) {
+                                                                $without_vat = collect($get('products'))
+                                                                    ->pluck('total_product_row')
+                                                                    ->sum();
+                                                                $with_vat = collect($get('products'))
+                                                                    ->pluck('total_product_row_vat')
+                                                                    ->sum();
+                                                                $set('total_products', $without_vat);
+                                                                $set('total_products_vat', $with_vat);
+                                                                return "ex vat " . $without_vat . " € <br> " . "inc vat " . $with_vat . " €";
+                                                            }),
+                                                            Hidden::make('total_products'),
+                                                            Hidden::make('total_products_vat'),
+                                ])->columns(3), // End Section
+                            ]), // End Step
                         
-                        // Step::make('project')
-                        //     ->view('forms.components.custom-step')
-                        //     ->description("complete this step after accept")
-                        //     ->visible(fn (PreInvoice $record = null) => (!empty($record) && $record->client_id == auth()->id()) ? false : true)
-                        //     ->schema([
-                        //         Group::make()->schema([
-                        //             TextInput::make('project_title'),
-                        //             TextInput::make('project_budget'),
-                        //             Select::make('project_size')
-                        //                 ->options([
-                        //                     'small' => 'Small',
-                        //                     'medium' => 'Medium',
-                        //                     'large' => 'Large',
-                        //                 ]),
-                        //             Radio::make('project_type')
-                        //                 ->inline()
-                        //                 ->options([
-                        //                     'governmental' => 'Governmental',
-                        //                     'corporate' => 'Corporate',
-                        //                     'private' => 'Private'
-                        //                 ]),
-                        //             SpatieMediaLibraryFileUpload::make('main_project_image')->collection('main_project_image')->columnSpan(1),
-                        //             SpatieMediaLibraryFileUpload::make('document_project_images')
-                        //                 ->collection('document_project_images')
-                        //                 ->multiple()
-                        //                 ->columnSpan(1),
-                        //             DateTimePicker::make('project_start_date')->label('Start date/time')->withoutSeconds(),
-                        //             DateTimePicker::make('project_end_date')->label('Start date/time')->withoutSeconds(),
-                        //         ])->columns(2), // End Group
-                        //     ]), // End Step
+                        Step::make('project')
+                            ->view('forms.components.custom-step')
+                            ->description("complete this step after accept")
+                            ->visible(fn (PreInvoice $record = null) => (!empty($record) && $record->client_id == auth()->id()) ? false : true)
+                            ->schema([
+                                Group::make()->schema([
+                                    TextInput::make('project_title'),
+                                    TextInput::make('project_budget'),
+                                    Select::make('project_size')
+                                        ->options([
+                                            'small' => 'Small',
+                                            'medium' => 'Medium',
+                                            'large' => 'Large',
+                                        ]),
+                                    Radio::make('project_type')
+                                        ->inline()
+                                        ->options([
+                                            'governmental' => 'Governmental',
+                                            'corporate' => 'Corporate',
+                                            'private' => 'Private'
+                                        ]),
+                                    SpatieMediaLibraryFileUpload::make('main_project_image')->collection('main_project_image')->columnSpan(1),
+                                    SpatieMediaLibraryFileUpload::make('document_project_images')
+                                        ->collection('document_project_images')
+                                        ->multiple()
+                                        ->columnSpan(1),
+                                    DateTimePicker::make('project_start_date')->label('Start date/time')->withoutSeconds(),
+                                    DateTimePicker::make('project_end_date')->label('Start date/time')->withoutSeconds(),
+                                ])->columns(2), // End Group
+                            ]), // End Step
 
                 ]), // End Wizard Steps
             ])->columns(1); // End Schema

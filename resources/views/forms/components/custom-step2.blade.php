@@ -35,5 +35,5 @@
     "
     {{ $attributes->merge($getExtraAttributes())->class(['filament-forms-wizard-component-step outline-none']) }}
 >
-    {{ $getChildComponentContainer() }}
+    {{-- {{ $getChildComponentContainer() }} --}}
 </div>
